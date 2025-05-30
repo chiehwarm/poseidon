@@ -436,7 +436,11 @@ func (c *C2HTTP) SendMessage(sendData []byte) []byte {
 		// close all idle connections
 		client.CloseIdleConnections()
 	}()
-	targeturl := fmt.Sprintf("%s%s", c.BaseURL, c.PostURI)
+	urls := strings.Split(c.PostURI, ";")
+	rand.Seed(time.Now().UnixNano())
+	randomIndex := rand.Intn(len(urls))
+	selectedBase := strings.TrimSpace(urls[randomIndex])
+	targeturl := fmt.Sprintf("%s%s", c.BaseURL, selectedBase)
 	//log.Println("Sending POST request to url: ", targeturl)
 	// If the AesPSK is set, encrypt the data we send
 	if len(c.Key) != 0 {
