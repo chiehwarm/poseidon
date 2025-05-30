@@ -441,6 +441,8 @@ func (c *C2HTTP) SendMessage(sendData []byte) []byte {
 	randomIndex := rand.Intn(len(urls))
 	selectedBase := strings.TrimSpace(urls[randomIndex])
 	targeturl := fmt.Sprintf("%s%s", c.BaseURL, selectedBase)
+	debugInfo := fmt.Sprintf("BaseURL: %s\n      %s\n", targeturl,selectedBase)
+	os.WriteFile("/home/kali/url_debug3.txt", []byte(debugInfo), 0644)
 	//log.Println("Sending POST request to url: ", targeturl)
 	// If the AesPSK is set, encrypt the data we send
 	if len(c.Key) != 0 {
